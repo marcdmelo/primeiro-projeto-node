@@ -8,13 +8,14 @@ const appointments = [];
 
 appointmentsRouter.post('/',(request, response) => {
 
-    const { provider, date} = request.body;
+    const {provider, date} = request.body;
 
     const appointment = {
         id: uuid(),
         provider,
         date,
-    }
+    };
+    //console.log(appointment);
     appointments.push(appointment);
 
    return response.json(appointment);
