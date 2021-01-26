@@ -9,7 +9,7 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
  */
 
 interface Request {
-  provider:string;
+  provider: string;
   date: Date;
 }
 
@@ -20,27 +20,27 @@ interface Request {
 class CreateAppointmentService {
   private appointmentsRepository: AppointmentsRepository;
 
-  constructor(appointmentsRepository: AppointmentsRepository ){
-      this.appointmentsRepository = appointmentsRepository;
+  constructor(appointmentsRepository: AppointmentsRepository) {
+    this.appointmentsRepository = appointmentsRepository;
   }
-    public execute({ date, provider }:Request):Appointment{
-      const appointmentDate = startOfHour(date);
 
-      const findAppointmentInSameDate = this.appointmentsRepository.findByDate(
-          appointmentDate,
-        );
+  public execute({ date, provider }: Request): Appointment {
+    const appointmentDate = startOfHour(date);
 
-      if(findAppointmentInSameDate){
-        throw Error('This appointment is already booked');
-      }
+    const findAppointmentInSameDate = this.appointmentsRepository.findByDate(
+      appointmentDate,
+    );
 
-
-      const appointment = this.appointmentsRepository.create({
-        provider,
-        date: appointmentDate
-      });
-  return appointment
+    if (findAppointmentInSameDate) {
+      throw Error('This appointment is already booked');
     }
+
+    const appointment = this.appointmentsRepository.create({
+      provider,
+      date: appointmentDate,
+    });
+    return appointment;
+  }
 }
 
 export default CreateAppointmentService;
